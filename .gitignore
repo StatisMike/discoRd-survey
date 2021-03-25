@@ -28,3 +28,4 @@ vignettes/*.pdf
 .Renviron
 versions
 .secrets
+shiny/.secrets/
