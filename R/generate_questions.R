@@ -77,11 +77,15 @@ choose_input <- function(input_df) {
 
 # Create a div in shiny UI with input objects corresponding to questions in the googlesheet
 populate_questions <- function(ss, sheet, div_id){
-  questions <- read_sheet(ss = ss, sheet = sheet)
+  questions <- read_sheet(ss = ss, sheet = sheet,
+                          col_types = QUESTIONS_INPUT_COLUMN_TYPES)
 
   inputs <- questions %>%
     rowwise() %>%
     group_map(~choose_input(.x))
+
+  # Drop invalid input types (returned as NULL from `choose_input()`)
+  inputs <- inputs[!sapply(inputs, is.null)]
 
   return(eval(bquote(htmltools::div(
     id = div_id,
