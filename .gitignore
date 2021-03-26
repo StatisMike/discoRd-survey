@@ -29,3 +29,5 @@ vignettes/*.pdf
 versions
 .secrets
 shiny/.secrets/
+# IDE specific files
+.dir-locals.el
