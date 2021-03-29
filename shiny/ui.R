@@ -13,7 +13,21 @@ appCSS <-
 fluidPage(
   shinyjs::useShinyjs(),
   shinyjs::inlineCSS(appCSS),
-  titlePanel("discoRd Member Survey"),
+  title = "discoRd Member Survey",
+  tags$head(tags$style(HTML("
+                            #header{
+                            text-align: center;
+                            }")),
+    div(id = "header",
+        h1("discoRd Member Survey"),
+        h5("Thank you for being an awesome part of the discoRd community.
+           To learn more about our", tags$br(),  "server members, we would like to collect 
+           demographic and interests information. Please", tags$br(), "be assured that this 
+           survey is completely anonymous and the data/analysis will only be", tags$br(), 
+           "shared within the discoRd server. Please contact the server admins via 
+           @ModMail or ping", tags$br(), "@admin in the #server-concerns channel if you have any 
+           questions regarding this survey."))
+  ),
   populate_questions(
     ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
     sheet = "Questions",
