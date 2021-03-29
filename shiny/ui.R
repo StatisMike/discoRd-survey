@@ -2,6 +2,7 @@ library(shiny)
 library(shinyjs)
 library(dplyr)
 
+source("../R/constants.R")
 source('../R/generate_questions.R')
 
 appCSS <-

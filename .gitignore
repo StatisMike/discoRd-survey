@@ -26,5 +26,9 @@ vignettes/*.pdf
 *.knit.md
 # R Environment Variables
 .Renviron
+shiny/.Rprofile
 versions
 .secrets
+shiny/.secrets/
+# IDE specific files
+.dir-locals.el
