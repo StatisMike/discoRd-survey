@@ -48,6 +48,7 @@ fluidPage(
                }
                .form-group {
                margin-bottom: 25px;
+               text-align: left;
                }
                ")),
   shinyjs::hidden(
