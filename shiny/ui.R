@@ -14,7 +14,14 @@ fluidPage(
   shinyjs::useShinyjs(),
   shinyjs::inlineCSS(appCSS),
   title = "discoRd Member Survey",
-  tags$head(tags$style(HTML("
+  tags$head(includeCSS(file.path("www", "style.css"))),
+  tags$a(
+    href="https://discord.gg/FuTSvkSCVj",
+    tags$img(style = "position: absolute; top: 0; right: 0; border: 0",
+             src = "image4.png",
+             alt = "Click to join the discoRd server!")
+  ),
+  tags$style(HTML("
                             h1{
                             text-align: center;
                             }
@@ -22,25 +29,24 @@ fluidPage(
                             text-align: center;
                             }
                             "
-                            )),
-    div(id = "header",
-        h1("discoRd Member Survey"),
-        h5("Thank you for being an awesome part of the discoRd community.
+  )),
+  div(id = "header",
+      h1("discoRd Member Survey"),
+      h5("Thank you for being an awesome part of the discoRd community.
            To learn more about our", tags$br(),  "server members, we would like to collect 
            demographic and interests information. Please", tags$br(), "be assured that this 
            survey is completely anonymous and the data/analysis will only be", tags$br(), 
-           "shared within the discoRd server. Please contact the server admins via 
+         "shared within the discoRd server. Please contact the server admins via 
            @ModMail or ping", tags$br(), "@admin in the #server-concerns channel if you have any 
-           questions regarding this survey."))
-  ),
+           questions regarding this survey.")),
   fluidRow(align = "center", populate_questions(
     ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
     sheet = "Questions",
     div_id = "form"
-    ),
-    div(style = "margin-top: 30px"),
-    tags$style(type='text/css', 
-               "
+  ),
+  div(style = "margin-top: 30px"),
+  tags$style(type='text/css', 
+             "
                #form { 
                width: 100%; 
                font-size: 14px;
