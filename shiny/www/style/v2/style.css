@@ -28,6 +28,8 @@ body {
     line-height: 1.2;
 }
 
+
+
 input[type='radio']:after {
     transform: scale(1.5);
     width: 15px;
@@ -41,6 +43,12 @@ input[type='radio']:after {
     display: inline-block;
     visibility: visible;
     border: 2px solid #A5A58D;
+}
+
+input[type='radio']:hover:after {
+    background-color: #DDBEA9;
+    border-color: #CB997E;
+    color: white;
 }
 
 input[type='radio']:checked:after {
