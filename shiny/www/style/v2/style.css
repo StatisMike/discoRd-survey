@@ -20,9 +20,17 @@ body {
 
 #form .form-group {
     font-family: "Roboto", sans-serif;
-    font-size: 25px;
+    font-size: 20px;
 }
 
+#form div.shiny-options-group {
+    type: "checkbox";
+}
+
+ input[type='radio'] { 
+     transform: scale(1.5); 
+ }
+ 
 /* Spacing between each question */
 #form > div.form-group.shiny-input-container {
     margin-top: 60px
