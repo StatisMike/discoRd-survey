@@ -25,11 +25,40 @@ body {
 
 #form div.shiny-options-group {
     type: "checkbox";
+    line-height: 1.2;
 }
 
- input[type='radio'] { 
-     transform: scale(1.5); 
- }
+input[type='radio']:after {
+    transform: scale(1.5);
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -3px;
+    left: -2px;
+    position: relative;
+    background-color: #FFF1E6;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid #A5A58D;
+}
+
+input[type='radio']:checked:after {
+    transform: scale(1.5);
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -3px;
+    left: -2px;
+    position: relative;
+    background-color: #DDBEA9;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid #CB997E;
+}
+
+
  
 /* Spacing between each question */
 #form > div.form-group.shiny-input-container {
