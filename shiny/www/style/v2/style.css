@@ -28,6 +28,11 @@ body {
     line-height: 1.2;
 }
 
+.form-control:focus {
+    border-color: #DDBEA9;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px #DDBEA9;
+}
+
 input[type='radio']:after {
     transform: scale(1.5);
     width: 15px;
@@ -58,6 +63,9 @@ input[type='radio']:checked:after {
     border: 2px solid #CB997E;
 }
 
+input[type='radio']:hover:after {
+    border-color: #CB997E;
+}
 
  
 /* Spacing between each question */
