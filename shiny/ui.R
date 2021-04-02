@@ -1,23 +1,12 @@
-library(shiny)
-library(shinyjs)
-library(dplyr)
-
-source("../R/constants.R")
-source('../R/generate_questions.R')
-
-appCSS <-
-  ".mandatory_star { color: red; }
-   #error { color: red; }"
-
 # Define UI for application
 fluidPage(
   shinyjs::useShinyjs(),
-  shinyjs::inlineCSS(appCSS),
+  shinyjs::inlineCSS(APP_CSS),
   title = "discoRd Member Survey",
   tags$head(
     tags$link(
-      rel = "stylesheet", 
-      type = "text/css", 
+      rel = "stylesheet",
+      type = "text/css",
       href = file.path("style", "v2", "style.css")
     )
   ),
@@ -36,10 +25,11 @@ fluidPage(
       id = "h5-container")
   ),
   fluidRow(
-    align = "center", 
+    align = "center",
     populate_questions(
-      ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-      sheet = "Questions",
+      questions = g_questions,
+      ss = GS_ID,
+      sheet = GS_SHEET_QUESTIONS,
       div_id = "form"
     ),
     div(id = "bottom-page-margin")
@@ -47,7 +37,7 @@ fluidPage(
   shinyjs::hidden(
     span(id = "submit_msg", "Submitting..."),
     div(
-      id = "error", 
+      id = "error",
       div(br(), tags$b("Error: "), span(id = "error_msg"))
     )
   ),

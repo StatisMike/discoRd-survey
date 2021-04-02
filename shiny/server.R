@@ -1,30 +1,10 @@
-#
-# This is a Shiny web application. Its purpose is to replicate the current
-# discoRd member survey in Shiny.
-#
-# Join the R discoRd server here:
-#
-#    https://discord.gg/xRkFsWwJsy
-#
-library(DT)
-library(shiny)
-library(shinyjs)
-library(dplyr)
-library(googlesheets4)
-library(gargle)
-
-questions <- read_sheet(
-  ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-  sheet = "Questions"
-)
-
 # mandatory fields
-fieldsMandatory <- questions %>%
+fieldsMandatory <- g_questions %>%
   filter(.data[['mandatory']]) %>%
   pull(inputId)
 
 # fields that will be saved and displayed in the googlesheet
-fieldsAll <- questions[['inputId']]
+fieldsAll <- g_questions[['inputId']]
 
 humanTime <- function() format(Sys.time(), "%Y-%m-%d %H:%M:%OS")
 
@@ -44,17 +24,17 @@ server <- function(input, output, session) {
       data.frame()
 
     googlesheets4::sheet_append(
-      ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
+      ss = GS_ID,
       data = data,
-      sheet = "Answers"
+      sheet = GS_SHEET_ANSWERS
     )
   }
 
   loadData <- function() {
     # Read the data
     read_sheet(
-      ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-      sheet = "Answers"
+      ss = GS_ID,
+      sheet = GS_SHEET_ANSWERS
     )
   }
 
