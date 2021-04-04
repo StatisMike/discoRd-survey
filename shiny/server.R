@@ -1,13 +1,3 @@
-# mandatory fields
-fieldsMandatory <- g_questions %>%
-  filter(.data[['mandatory']]) %>%
-  pull(inputId)
-
-# fields that will be saved and displayed in the googlesheet
-fieldsAll <- g_questions[['inputId']]
-
-humanTime <- function() format(Sys.time(), "%Y-%m-%d %H:%M:%OS")
-
 # Define server logic
 server <- function(input, output, session) {
 
@@ -16,27 +6,6 @@ server <- function(input, output, session) {
     data <- sapply(fieldsAll, function(x) input[[x]])
     data <- c(data, timestamp = humanTime())
   })
-
-  # save the data to Google Sheet
-  saveData <- function(data){
-    data <- data %>%
-      as.list() %>%
-      data.frame()
-
-    googlesheets4::sheet_append(
-      ss = GS_ID,
-      data = data,
-      sheet = GS_SHEET_ANSWERS
-    )
-  }
-
-  loadData <- function() {
-    # Read the data
-    read_sheet(
-      ss = GS_ID,
-      sheet = GS_SHEET_ANSWERS
-    )
-  }
 
   observe({
     # check if all mandatory fields have a value
@@ -63,7 +32,7 @@ server <- function(input, output, session) {
     shinyjs::hide("error")
 
     tryCatch({
-      saveData(formData())
+      save_new_answers(formData())
       shinyjs::reset("form")
       shinyjs::hide("form")
       shinyjs::show("thankyou_msg")

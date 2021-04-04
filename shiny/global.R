@@ -23,3 +23,40 @@ source('../R/generate_questions.R')
 g_questions <- read_sheet(ss = GS_ID,
                           sheet = GS_SHEET_QUESTIONS,
                           col_types = QUESTIONS_INPUT_COLUMN_TYPES)
+
+# mandatory fields
+fieldsMandatory <- g_questions %>%
+  filter(.data[['mandatory']]) %>%
+  pull(inputId)
+
+# fields that will be saved and displayed in the googlesheet
+fieldsAll <- g_questions[['inputId']]
+
+## Create a timestamp
+humanTime <- function() format(Sys.time(), "%Y-%m-%d %H:%M:%OS")
+
+## Save the answer user input to Google Sheet
+save_new_answers <- function(user_answers) {
+
+  old_answers <- read_all_answers()
+  user_answers <- user_answers %>%
+    as.list() %>%
+    data.frame()
+
+  to_upload_answers <- full_join(old_answers, user_answers) %>%
+    relocate(timestamp, .after = last_col())
+
+  sheet_write(
+    ss = GS_ID,
+    data = to_upload_answers,
+    sheet = GS_SHEET_ANSWERS
+  )
+}
+
+## Read the Answer data from Google Sheets
+read_all_answers <- function() {
+  read_sheet(
+    ss = GS_ID,
+    sheet = GS_SHEET_ANSWERS
+  )
+}
