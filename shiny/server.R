@@ -3,7 +3,7 @@ server <- function(input, output, session) {
 
   # gather the form data into the right shape
   formData <- reactive({
-    data <- sapply(fieldsAll, function(x) input[[x]])
+    data <- reactiveValuesToList(input)[fieldsAll]
     data <- c(data, timestamp = humanTime())
   })
 

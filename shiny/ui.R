@@ -1,5 +1,7 @@
 # Define UI for application
 fluidPage(
+  theme = bs_theme(version = 4,
+                   base_font = font_google("Yusei Magic")),
   shinyjs::useShinyjs(),
   shinyjs::inlineCSS(APP_CSS),
   title = "discoRd Member Survey",
@@ -7,13 +9,13 @@ fluidPage(
     tags$link(
       rel = "stylesheet",
       type = "text/css",
-      href = file.path("style", "v2", "style.css")
+      href = file.path("style", "v3", "style.css")
     )
   ),
   tags$a(
     href="https://discord.gg/FuTSvkSCVj",
     tags$img(
-      src = file.path("style", "v2", "join.png"),
+      src = file.path("style", "v3", "join.png"),
       alt = "Click to join the discoRd server!",
       id = "join-discord")
   ),
@@ -31,8 +33,7 @@ fluidPage(
       ss = GS_ID,
       sheet = GS_SHEET_QUESTIONS,
       div_id = "form"
-    ),
-    div(id = "bottom-page-margin")
+    )
   ),
   shinyjs::hidden(
     span(id = "submit_msg", "Submitting..."),

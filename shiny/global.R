@@ -16,6 +16,7 @@ library(shinyjs)
 library(dplyr)
 library(googlesheets4)
 library(gargle)
+library(bslib)
 
 source("../R/constants.R")
 source('../R/generate_questions.R')
@@ -37,13 +38,17 @@ humanTime <- function() format(Sys.time(), "%Y-%m-%d %H:%M:%OS")
 
 ## Save the answer user input to Google Sheet
 save_new_answers <- function(user_answers) {
-
   old_answers <- read_all_answers()
+  ## drop invalid answers
+  user_answers <- user_answers[!sapply(user_answers, is.null)]
   user_answers <- user_answers %>%
-    as.list() %>%
-    data.frame()
+    as.data.frame()
 
-  to_upload_answers <- full_join(old_answers, user_answers) %>%
+  ## I'm using `merge()` here and not `full_join()` because
+  ## I want to dynamically coerce variable types. Otherwise,
+  ## `full_join()`'s strict type safety raises an error
+  to_upload_answers <- merge(old_answers, user_answers,
+                             all = TRUE, sort = FALSE) %>%
     relocate(timestamp, .after = last_col())
 
   sheet_write(
