@@ -1,30 +1,21 @@
-library(shiny)
-library(shinyjs)
-library(dplyr)
-
-source("../R/constants.R")
-source('../R/generate_questions.R')
-
-appCSS <-
-  ".mandatory_star { color: red; }
-   #error { color: red; }"
-
 # Define UI for application
 fluidPage(
+  theme = bs_theme(version = 4,
+                   base_font = font_google("Yusei Magic")),
   shinyjs::useShinyjs(),
-  shinyjs::inlineCSS(appCSS),
+  shinyjs::inlineCSS(APP_CSS),
   title = "discoRd Member Survey",
   tags$head(
     tags$link(
-      rel = "stylesheet", 
-      type = "text/css", 
-      href = file.path("style", "v2", "style.css")
+      rel = "stylesheet",
+      type = "text/css",
+      href = file.path("style", "v3", "style.css")
     )
   ),
   tags$a(
     href="https://discord.gg/FuTSvkSCVj",
     tags$img(
-      src = file.path("style", "v2", "join.png"),
+      src = file.path("style", "v3", "join.png"),
       alt = "Click to join the discoRd server!",
       id = "join-discord")
   ),
@@ -36,18 +27,18 @@ fluidPage(
       id = "h5-container")
   ),
   fluidRow(
-    align = "center", 
+    align = "center",
     populate_questions(
-      ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-      sheet = "Questions",
+      questions = g_questions,
+      ss = GS_ID,
+      sheet = GS_SHEET_QUESTIONS,
       div_id = "form"
-    ),
-    div(id = "bottom-page-margin")
+    )
   ),
   shinyjs::hidden(
     span(id = "submit_msg", "Submitting..."),
     div(
-      id = "error", 
+      id = "error",
       div(br(), tags$b("Error: "), span(id = "error_msg"))
     )
   ),

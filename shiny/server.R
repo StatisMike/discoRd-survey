@@ -1,62 +1,11 @@
-#
-# This is a Shiny web application. Its purpose is to replicate the current
-# discoRd member survey in Shiny.
-#
-# Join the R discoRd server here:
-#
-#    https://discord.gg/xRkFsWwJsy
-#
-library(DT)
-library(shiny)
-library(shinyjs)
-library(dplyr)
-library(googlesheets4)
-library(gargle)
-
-questions <- read_sheet(
-  ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-  sheet = "Questions"
-)
-
-# mandatory fields
-fieldsMandatory <- questions %>%
-  filter(.data[['mandatory']]) %>%
-  pull(inputId)
-
-# fields that will be saved and displayed in the googlesheet
-fieldsAll <- questions[['inputId']]
-
-humanTime <- function() format(Sys.time(), "%Y-%m-%d %H:%M:%OS")
-
 # Define server logic
 server <- function(input, output, session) {
 
   # gather the form data into the right shape
   formData <- reactive({
-    data <- sapply(fieldsAll, function(x) input[[x]])
+    data <- reactiveValuesToList(input)[fieldsAll]
     data <- c(data, timestamp = humanTime())
   })
-
-  # save the data to Google Sheet
-  saveData <- function(data){
-    data <- data %>%
-      as.list() %>%
-      data.frame()
-
-    googlesheets4::sheet_append(
-      ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-      data = data,
-      sheet = "Answers"
-    )
-  }
-
-  loadData <- function() {
-    # Read the data
-    read_sheet(
-      ss = "1YRVzzMXm-IIxhvpQWeXCJyh4kXRfcLad2Z60gzC0dxU",
-      sheet = "Answers"
-    )
-  }
 
   observe({
     # check if all mandatory fields have a value
@@ -83,7 +32,7 @@ server <- function(input, output, session) {
     shinyjs::hide("error")
 
     tryCatch({
-      saveData(formData())
+      save_new_answers(formData())
       shinyjs::reset("form")
       shinyjs::hide("form")
       shinyjs::show("thankyou_msg")
