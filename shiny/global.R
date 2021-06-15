@@ -30,6 +30,11 @@ fieldsMandatory <- g_questions %>%
   filter(.data[['mandatory']]) %>%
   pull(inputId)
 
+# numeric inputs
+fieldsNumeric <- g_questions %>%
+  filter(type == 'numericInput') %>%
+  pull(inputId)
+
 # fields that will be saved and displayed in the googlesheet
 fieldsAll <- g_questions[['inputId']]
 
