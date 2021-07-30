@@ -13,24 +13,24 @@ labelMandatory <- function(label){
 
 # Sanitize google sheet input
 sanitize_input <- function(x){
-  if( !is.null(x[["mandatory"]]) && isTRUE(x$mandatory) ) {
+  if (!is.null(x[["mandatory"]]) && isTRUE(x$mandatory)) {
     x$label <- bquote(labelMandatory(.(x$label)))
     x$mandatory <- NULL
   } else {
     x$mandatory <- NULL
   }
 
-  if( !is.null(x[["choices"]]) ){
+  if (!is.null(x[["choices"]])) {
     x$choices <- scan(text = x$choices, what = character(), sep = ",",
                       strip.white = TRUE, quiet = TRUE)
     x$choices <- x$choices[x$choices != ""]
 
-    if( is.na(x$selected) ){
+    if (is.na(x$selected)) {
       x$selected <- character(0)
     }
   }
 
-  if( is.na(x$width) ){
+  if (is.na(x$width)) {
     x$width <- NULL
   }
   return(x)
@@ -38,7 +38,7 @@ sanitize_input <- function(x){
 
 # Select columns based on input type
 select_cols <- function(df, ..., prefix=NULL){
-  if( !is.null(prefix) ){
+  if (!is.null(prefix)) {
     df <- select(df, ..., starts_with(prefix)) %>%
       rename_at(vars(starts_with(prefix)), ~sub(prefix, '', .x))
   } else {
