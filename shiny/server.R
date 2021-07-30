@@ -37,18 +37,18 @@ server <- function(input, output, session) {
     # can't be disabled - need to be able to trigger modalDialog with info
 
     valid$filled_matched <- c(valid$mandatory_filled, valid$minmax_matched)
-    
+
     if(input$submit > 0){
-      
+
       for (input in 1:length(valid$filled_matched)) {
-        
+
         if (isTRUE(valid$filled_matched[input])) {
-          
+
           shinyjs::removeCssClass(id = names(valid$filled_matched)[input],
                                   class = "invalid_input")
-          
+
         } else {
-          
+
           shinyjs::addCssClass(id = names(valid$filled_matched)[input],
                                class = "invalid_input")
         }
